@@ -52,7 +52,7 @@ fun TipCalculatorApp() {
     val focusManager = LocalFocusManager.current
 
     val tip = calculateTip(
-        billAmount = billAmount.toDoubleOrNull() ?: 0.0,
+       billAmount = billAmount.toDoubleOrNull() ?: 0.0,
         tipPercent = tipPercentage.toDoubleOrNull() ?: 0.0,
         roundUp = roundUp
     )
