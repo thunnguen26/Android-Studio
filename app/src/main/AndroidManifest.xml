@@ -52,6 +52,17 @@
             </intent-filter>
         </activity>
 
+        <!-- CUPCAKE APP -->
+        <activity
+            android:name=".lab6.CupcakeActivity"
+            android:exported="true"
+            android:label="Cupcake">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
