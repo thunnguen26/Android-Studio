@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "817723029921",
+    "firebase_url": "https://fooraapp-26bac-default-rtdb.firebaseio.com",
+    "project_id": "fooraapp-26bac",
+    "storage_bucket": "fooraapp-26bac.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817723029921:android:b31168338112fc0b8a73e0",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsNXlgc1d11yF478uawVJHAFleslJSajE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817723029921:android:dfd0d505c958548f8a73e0",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsNXlgc1d11yF478uawVJHAFleslJSajE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
