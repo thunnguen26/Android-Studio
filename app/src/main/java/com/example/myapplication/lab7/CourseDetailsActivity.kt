@@ -3,7 +3,6 @@ package com.example.myapplication.lab7
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,6 +27,9 @@ import com.example.myapplication.lab7.ui.theme.greenColor
 import com.google.firebase.firestore.FirebaseFirestore
 
 class CourseDetailsActivity : ComponentActivity() {
+
+    private val courseList = mutableStateListOf<Course?>()
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,40 +39,6 @@ class CourseDetailsActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val courseList = remember { mutableStateListOf<Course?>() }
-                    val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-
-                    // Sử dụng LaunchedEffect để chỉ gọi Firebase 1 lần khi màn hình mở ra
-                    LaunchedEffect(Unit) {
-                        db.collection("Courses").get()
-                            .addOnSuccessListener { queryDocumentSnapshots ->
-                                if (!queryDocumentSnapshots.isEmpty) {
-                                    val list = queryDocumentSnapshots.documents
-                                    courseList.clear() // Xóa list cũ trước khi add mới
-                                    for (d in list) {
-                                        val c: Course? = d.toObject(Course::class.java)
-                                        if (c != null) {
-                                            c.courseID = d.id
-                                            courseList.add(c)
-                                        }
-                                    }
-                                } else {
-                                    Toast.makeText(
-                                        this@CourseDetailsActivity,
-                                        "No data found in Database",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-                            .addOnFailureListener {
-                                Toast.makeText(
-                                    this@CourseDetailsActivity,
-                                    "Fail to get the data.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                    }
-
                     Scaffold(
                         topBar = {
                             CenterAlignedTopAppBar(
@@ -97,6 +65,33 @@ class CourseDetailsActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadCourses()
+    }
+
+    private fun loadCourses() {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("Courses").get()
+            .addOnSuccessListener { queryDocumentSnapshots ->
+                if (!queryDocumentSnapshots.isEmpty) {
+                    courseList.clear()
+                    for (d in queryDocumentSnapshots.documents) {
+                        val c = d.toObject(Course::class.java)
+                        if (c != null) {
+                            c.courseID = d.id
+                            courseList.add(c)
+                        }
+                    }
+                } else {
+                    Toast.makeText(this, "No data found in Database", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Fail to get the data.", Toast.LENGTH_SHORT).show()
+            }
     }
 
     @Composable

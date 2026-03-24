@@ -139,7 +139,14 @@ fun FirebaseUI(context: Context, modifier: Modifier = Modifier) {
                         courseName.value,
                         courseDuration.value,
                         courseDescription.value,
-                        context
+                        context,
+                        onSuccess = {
+                            courseID.value = ""
+                            courseName.value = ""
+                            courseDuration.value = ""
+                            courseDescription.value = ""
+                        }
+
                     )
                 }
             },
@@ -170,7 +177,8 @@ fun addDataToFirebase(
     courseName: String,
     courseDuration: String,
     courseDescription: String,
-    context: Context
+    context: Context,
+    onSuccess: () -> Unit
 ) {
     val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     val dbCourses: CollectionReference = db.collection("Courses")
@@ -182,6 +190,7 @@ fun addDataToFirebase(
             "Your Course has been added to Firebase Firestore",
             Toast.LENGTH_SHORT
         ).show()
+        onSuccess()
     }.addOnFailureListener { e ->
         Toast.makeText(context, "Fail to add course \n$e", Toast.LENGTH_SHORT).show()
     }
